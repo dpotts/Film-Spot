@@ -1,0 +1,65 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+FilmSpot
+</name>
+</assembly>
+<members>
+<member name="T:Film_Spot.LocalizedStrings">
+	<summary>
+ Provides access to string resources.
+ </summary>
+</member><member name="M:Film_Spot.MainPage.InitializeComponent">
+	<summary>
+InitializeComponent
+</summary>
+</member><member name="M:Film_Spot.App.InitializeComponent">
+	<summary>
+InitializeComponent
+</summary>
+</member><member name="P:Film_Spot.App.RootFrame">
+	<summary>
+ Provides easy access to the root frame of the Phone Application.
+ </summary>
+	<returns>The root frame of the Phone Application.</returns>
+</member><member name="M:Film_Spot.App.#ctor">
+	<summary>
+ Constructor for the Application object.
+ </summary>
+</member><member name="P:Film_Spot.AppResources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:Film_Spot.AppResources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:Film_Spot.AppResources.ResourceFlowDirection">
+	<summary>
+  Looks up a localized string similar to LeftToRight.
+</summary>
+</member><member name="P:Film_Spot.AppResources.ResourceLanguage">
+	<summary>
+  Looks up a localized string similar to us-EN.
+</summary>
+</member><member name="P:Film_Spot.AppResources.ApplicationTitle">
+	<summary>
+  Looks up a localized string similar to MY APPLICATION.
+</summary>
+</member><member name="P:Film_Spot.AppResources.AppBarButtonText">
+	<summary>
+  Looks up a localized string similar to button.
+</summary>
+</member><member name="P:Film_Spot.AppResources.AppBarMenuItemText">
+	<summary>
+  Looks up a localized string similar to Menu Item.
+</summary>
+</member><member name="T:Film_Spot.AppResources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>
