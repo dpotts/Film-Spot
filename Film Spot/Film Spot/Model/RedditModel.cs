@@ -43,6 +43,39 @@ namespace Film_Spot.Model
                 }
             }
         }
+
+        private int _year;
+        public int Year
+        {
+            get
+            {
+                return _year;
+            }
+            set
+            {
+                if (_year != value)
+                {
+                    _year = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _imageUrl;
+        public string ImageUrl
+        {
+            get { return _imageUrl; }
+            set
+            {
+                if (_imageUrl != value)
+                {
+                    _imageUrl = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

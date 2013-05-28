@@ -38,7 +38,7 @@
                          VerticalAlignment="Top" Margin="0,7,7,0"
                        Grid.RowSpan="2">
                     <Image.Source>
-                        <BitmapImage UriSource="{Binding AvatarUrl}"
+                        <BitmapImage UriSource="{Binding ImageUrl}"
                                      CreateOptions="BackgroundCreation"/>
                     </Image.Source>
                 </Image>

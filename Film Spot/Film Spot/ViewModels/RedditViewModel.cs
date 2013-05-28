@@ -9,6 +9,7 @@ using System.Xml;
 using Newtonsoft.Json;
 using Film_Spot.Model;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Film_Spot.ViewModels
 {
@@ -45,6 +46,25 @@ namespace Film_Spot.ViewModels
             private set;
         }
 
+        public class RootObject_Details
+        {
+            public string Title { get; set; }
+            public string Year { get; set; }
+            public string Rated { get; set; }
+            public string Released { get; set; }
+            public string Runtime { get; set; }
+            public string Genre { get; set; }
+            public string Director { get; set; }
+            public string Writer { get; set; }
+            public string Actors { get; set; }
+            public string Plot { get; set; }
+            public string Poster { get; set; }
+            public string imdbRating { get; set; }
+            public string imdbVotes { get; set; }
+            public string imdbID { get; set; }
+            public string Type { get; set; }
+            public string Response { get; set; }
+        }
 
         public class MediaEmbed
         {
@@ -145,11 +165,11 @@ namespace Film_Spot.ViewModels
             string url = "";
             if (last_post_name == "")
             {
-                url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/.json";
+                url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json";
             }
             else
             {
-                url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/.json?after=" + last_post_name;
+                url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json?after=" + last_post_name;
             }
             HttpWebRequest hWebRequest = (HttpWebRequest)HttpWebRequest.Create(url);
             hWebRequest.Method = "GET";
@@ -173,12 +193,24 @@ namespace Film_Spot.ViewModels
                 {
                     foreach (var movie in movies.data.children)
                     {
-                        this.MovieCollection.Add(new MoviesResult()
+                        string[] title_year = Regex.Split(movie.data.title, @"\((.*?)\)");
+                        if (title_year.Length > 0)
                         {
-                            Title = movie.data.title,
-                            Link = movie.data.url
-                        });
-                    }
+                            string movie_title = title_year[0].Trim();
+                            int movie_year = 0;
+                            if(title_year.Length > 1)
+                                int.TryParse(title_year[1], out movie_year);
+
+                            Get_Movie_Details(movie_title, movie_year);
+
+                            this.MovieCollection.Add(new MoviesResult()
+                            {
+                                Title = movie_title,
+                                Year = movie_year,
+                                Link = movie.data.url
+                            });
+                        }
+                    }  
                     last_post_name = movies.data.after;
                     IsLoading = false;
                 });
@@ -188,6 +220,66 @@ namespace Film_Spot.ViewModels
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     MessageBox.Show("Network error occured " + e.Message);
+                });
+            }
+        }
+
+        public void Get_Movie_Details(string name, int year)
+        {
+            Debug.WriteLine("getting details");
+            IsLoading = true;
+            string url = "";
+            if (name != "")
+            {
+                if (year > 0)
+                {
+                    url = "http://www.omdbapi.com/?t=" + name + "&y=" + year;
+                }
+                else
+                {
+                    url = "http://www.omdbapi.com/?t=" + name;
+                }
+                HttpWebRequest hWebRequest = (HttpWebRequest)HttpWebRequest.Create(url);
+                hWebRequest.Method = "GET";
+                hWebRequest.BeginGetResponse(Response_Movie_Details, hWebRequest);
+            }
+            else
+            {
+                Debug.WriteLine("no title to search for");
+            }
+        }
+
+        public void Response_Movie_Details(IAsyncResult result)
+        {
+            Debug.WriteLine("got a response for details");
+            RootObject_Details movie_info = new RootObject_Details();
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)result.AsyncState;
+                HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(result);
+                using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    string json_details = "";
+                    json_details = streamReader.ReadToEnd();
+                    movie_info = JsonConvert.DeserializeObject<RootObject_Details>(json_details);
+
+                }
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    foreach (MoviesResult SingleMovie in MovieCollection)
+                    {
+                        if (string.Equals(movie_info.Title, SingleMovie.Title, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            SingleMovie.ImageUrl = movie_info.Poster;
+                        }
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    MessageBox.Show("Network error occured getting movie details" + e.Message);
                 });
             }
         }
