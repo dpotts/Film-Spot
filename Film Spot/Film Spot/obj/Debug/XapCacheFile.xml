@@ -1,11 +1,11 @@
-﻿<xapCache source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Film_Spot_Debug_AnyCPU.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="5/27/2013 9:59:55 PM">
-  <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\Film Spot.dll" archivePath="Film Spot.dll" lastWriteTime="5/27/2013 9:59:54 PM" />
+﻿<xapCache source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Film_Spot_Debug_AnyCPU.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="5/28/2013 12:21:55 AM">
+  <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\Film Spot.dll" archivePath="Film Spot.dll" lastWriteTime="5/28/2013 12:21:54 AM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Assets\AlignmentGrid.png" archivePath="Assets\AlignmentGrid.png" lastWriteTime="5/26/2013 6:18:27 PM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Assets\Tiles\FlipCycleTileLarge.png" archivePath="Assets\Tiles\FlipCycleTileLarge.png" lastWriteTime="5/26/2013 6:18:27 PM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Assets\Tiles\FlipCycleTileSmall.png" archivePath="Assets\Tiles\FlipCycleTileSmall.png" lastWriteTime="5/26/2013 6:18:27 PM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Assets\Tiles\IconicTileMediumLarge.png" archivePath="Assets\Tiles\IconicTileMediumLarge.png" lastWriteTime="5/26/2013 6:18:27 PM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Assets\Tiles\IconicTileSmall.png" archivePath="Assets\Tiles\IconicTileSmall.png" lastWriteTime="5/26/2013 6:18:27 PM" />
-  <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="5/27/2013 9:59:51 PM" />
+  <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="5/28/2013 12:21:52 AM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Assets\ApplicationIcon.png" archivePath="Assets\ApplicationIcon.png" lastWriteTime="5/26/2013 6:18:27 PM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png" archivePath="Assets\Tiles\FlipCycleTileMedium.png" lastWriteTime="5/26/2013 6:18:27 PM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\packages\Microsoft.Bcl.Async.1.0.16\lib\wp8\Microsoft.Threading.Tasks.dll" archivePath="Microsoft.Threading.Tasks.dll" lastWriteTime="5/27/2013 12:25:07 AM" />
@@ -17,5 +17,5 @@
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\packages\Microsoft.Bcl.Async.1.0.16\lib\wp8\Microsoft.Threading.Tasks.Extensions.xml" archivePath="Microsoft.Threading.Tasks.Extensions.xml" lastWriteTime="5/27/2013 12:25:07 AM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\packages\Microsoft.Bcl.Async.1.0.16\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.xml" archivePath="Microsoft.Threading.Tasks.Extensions.Phone.xml" lastWriteTime="5/27/2013 12:25:07 AM" />
   <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\packages\Newtonsoft.Json.5.0.5\lib\portable-net45+wp80+win8\Newtonsoft.Json.xml" archivePath="Newtonsoft.Json.xml" lastWriteTime="5/26/2013 11:01:02 PM" />
-  <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="5/26/2013 6:18:30 PM" />
+  <file source="C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="5/27/2013 11:44:10 PM" />
 </xapCache>
