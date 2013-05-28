@@ -40,13 +40,17 @@
          -->
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
             <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Button Content="Button" HorizontalAlignment="Left" Margin="336,0,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+            <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="26,72,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="525" Width="397"/>
+            <phone:LongListSelector HorizontalAlignment="Left" Height="100" Margin="191,135,0,0" VerticalAlignment="Top" Width="100"/>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
 
         </Grid>
 
