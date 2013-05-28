@@ -18,7 +18,6 @@ C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\ob
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\XapCacheFile.xml
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Newtonsoft.Json.dll
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Newtonsoft.Json.xml
-C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\Film Spot.csprojResolveAssemblyReference.cache
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Microsoft.Threading.Tasks.dll
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Microsoft.Threading.Tasks.Extensions.Phone.dll
