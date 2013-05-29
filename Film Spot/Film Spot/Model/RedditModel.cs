@@ -44,18 +44,18 @@ namespace Film_Spot.Model
             }
         }
 
-        private int _year;
-        public int Year
+        private string _released;
+        public string Released
         {
             get
             {
-                return _year;
+                return _released;
             }
             set
             {
-                if (_year != value)
+                if (_released != value)
                 {
-                    _year = value;
+                    _released = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -70,6 +70,90 @@ namespace Film_Spot.Model
                 if (_imageUrl != value)
                 {
                     _imageUrl = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _star1;
+        public string Star1
+        {
+            get { return _star1; }
+            set
+            {
+                if (_star1 != value)
+                {
+                    _star1 = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _star2;
+        public string Star2
+        {
+            get { return _star2; }
+            set
+            {
+                if (_star2 != value)
+                {
+                    _star2 = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _star3;
+        public string Star3
+        {
+            get { return _star3; }
+            set
+            {
+                if (_star3 != value)
+                {
+                    _star3 = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _star4;
+        public string Star4
+        {
+            get { return _star4; }
+            set
+            {
+                if (_star4 != value)
+                {
+                    _star4 = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _star5;
+        public string Star5
+        {
+            get { return _star5; }
+            set
+            {
+                if (_star5 != value)
+                {
+                    _star5 = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _runtime;
+        public string Runtime
+        {
+            get { return _runtime; }
+            set
+            {
+                if (_runtime != value)
+                {
+                    _runtime = value;
                     NotifyPropertyChanged();
                 }
             }

@@ -206,7 +206,8 @@ namespace Film_Spot.ViewModels
                             this.MovieCollection.Add(new MoviesResult()
                             {
                                 Title = movie_title,
-                                Year = movie_year,
+                                Runtime = "Unknown",
+                                Released = "Unknown",
                                 Link = movie.data.url
                             });
                         }
@@ -271,6 +272,94 @@ namespace Film_Spot.ViewModels
                         if (string.Equals(movie_info.Title, SingleMovie.Title, StringComparison.CurrentCultureIgnoreCase))
                         {
                             SingleMovie.ImageUrl = movie_info.Poster;
+                            SingleMovie.Runtime = movie_info.Runtime;
+                            SingleMovie.Released = movie_info.Released;
+
+                            double rating;
+                            double.TryParse(movie_info.imdbRating, out rating);
+                            if (rating > 9.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/full_star.png";
+                                SingleMovie.Star3 = "Assets/full_star.png";
+                                SingleMovie.Star4 = "Assets/full_star.png";
+                                SingleMovie.Star5 = "Assets/full_star.png";
+                            }
+                            else if (rating > 8.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/full_star.png";
+                                SingleMovie.Star3 = "Assets/full_star.png";
+                                SingleMovie.Star4 = "Assets/full_star.png";
+                                SingleMovie.Star5 = "Assets/half_star.png";
+
+                            }
+                            else if (rating > 7.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/full_star.png";
+                                SingleMovie.Star3 = "Assets/full_star.png";
+                                SingleMovie.Star4 = "Assets/full_star.png";
+                                SingleMovie.Star5 = "Assets/no_star.png";
+                            }
+                            else if (rating > 6.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/full_star.png";
+                                SingleMovie.Star3 = "Assets/full_star.png";
+                                SingleMovie.Star4 = "Assets/half_star.png";
+                                SingleMovie.Star5 = "Assets/no_star.png";
+                            }
+                            else if (rating > 5.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/full_star.png";
+                                SingleMovie.Star3 = "Assets/full_star.png";
+                                SingleMovie.Star4 = "Assets/no_star.png";
+                                SingleMovie.Star5 = "Assets/no_star.png";
+                            }
+                            else if (rating > 4.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/full_star.png";
+                                SingleMovie.Star3 = "Assets/half_star.png";
+                                SingleMovie.Star4 = "Assets/no_star.png";
+                                SingleMovie.Star5 = "Assets/no_star.png";
+                            }
+                            else if (rating > 3.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/full_star.png";
+                                SingleMovie.Star3 = "Assets/no_star.png";
+                                SingleMovie.Star4 = "Assets/no_star.png";
+                                SingleMovie.Star5 = "Assets/no_star.png";
+                            }
+                            else if (rating > 2.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/half_star.png";
+                                SingleMovie.Star3 = "Assets/no_star.png";
+                                SingleMovie.Star4 = "Assets/no_star.png";
+                                SingleMovie.Star5 = "Assets/no_star.png";
+                            }
+                            else if (rating > 1.0)
+                            {
+                                SingleMovie.Star1 = "Assets/full_star.png";
+                                SingleMovie.Star2 = "Assets/no_star.png";
+                                SingleMovie.Star3 = "Assets/no_star.png";
+                                SingleMovie.Star4 = "Assets/no_star.png";
+                                SingleMovie.Star5 = "Assets/no_star.png";
+                            }
+                            else
+                            {
+                                SingleMovie.Star1 = "Assets/half_star.png";
+                                SingleMovie.Star2 = "Assets/no_star.png";
+                                SingleMovie.Star3 = "Assets/no_star.png";
+                                SingleMovie.Star4 = "Assets/no_star.png";
+                                SingleMovie.Star5 = "Assets/no_star.png";
+                            }
+
+
                         }
                     }
                 });

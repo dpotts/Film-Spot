@@ -20,7 +20,7 @@
         <vm:RedditViewModel x:Key="viewModel"/>
 
         <DataTemplate x:Key="ResultItemTemplate">
-            <Grid Margin="0,6,0,0">
+            <Grid Margin="5,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -29,14 +29,14 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Rectangle Fill="Gray" Height="50" Width="50" Grid.Row="0" Grid.Column="0" 
+                <Rectangle Fill="Black" Height="125" Width="100" Grid.Row="0" Grid.Column="0" 
                          VerticalAlignment="Top" Margin="0,7,7,0"
-                       Grid.RowSpan="2">
+                       Grid.RowSpan="3">
 
                 </Rectangle>
-                <Image Height="50" Width="50" Grid.Row="0" Grid.Column="0" 
+                <Image Height="125" Width="100" Grid.Row="0" Grid.Column="0" 
                          VerticalAlignment="Top" Margin="0,7,7,0"
-                       Grid.RowSpan="2">
+                       Grid.RowSpan="3">
                     <Image.Source>
                         <BitmapImage UriSource="{Binding ImageUrl}"
                                      CreateOptions="BackgroundCreation"/>
@@ -45,11 +45,51 @@
                 <TextBlock Text="{Binding Title}" Grid.Row="0" Grid.Column="1"
                                  Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top"/>
 
-                <TextBlock Text="{Binding Link}" TextWrapping="Wrap"
-                               Grid.Row="1" Grid.Column="1"
-                               VerticalAlignment="Top"
-                               />
-
+                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
+                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,7,7,0">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding Star1}"
+                                     CreateOptions="BackgroundCreation"/>
+                    </Image.Source>
+                </Image>
+                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
+                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="28,7,7,0">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding Star2}"
+                                     CreateOptions="BackgroundCreation"/>
+                    </Image.Source>
+                </Image>
+                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
+                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="56,7,7,0">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding Star3}"
+                                     CreateOptions="BackgroundCreation"/>
+                    </Image.Source>
+                </Image>
+                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
+                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="84,7,7,0">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding Star4}"
+                                     CreateOptions="BackgroundCreation"/>
+                    </Image.Source>
+                </Image>
+                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
+                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="112,7,7,0">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding Star5}"
+                                     CreateOptions="BackgroundCreation"/>
+                    </Image.Source>
+                </Image>
+                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Released:" Margin="2"/>
+                        <TextBlock Text="{Binding Released}" Margin="2"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Runtime:" Margin="2"/>
+                    <TextBlock Text="{Binding Runtime}" Margin="2"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
         </DataTemplate>
 
