@@ -13,7 +13,18 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"    
     xmlns:viewmodels="clr-namespace:Film_Spot.ViewModels"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True" HorizontalAlignment="Center" HorizontalContentAlignment="Left">
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="False">
+
+            <shell:ApplicationBarIconButton IconUri="Assets/transport.play.png" Text="Play" Click="play_clicked"/>
+            <shell:ApplicationBarIconButton IconUri="Assets/feature.video.png" Text="Info" Click="info_clicked"/>
+            <shell:ApplicationBarIconButton IconUri="Assets/share.png" Text="Share" Click="share_clicked"/>
+            <shell:ApplicationBarIconButton IconUri="Assets/close.png" Text="Close" Click="close_clicked"/>
+
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
     <phone:PhoneApplicationPage.Resources>
 
@@ -109,7 +120,7 @@
                  DataContext="{StaticResource viewModel}"
                  ItemTemplate="{StaticResource ResultItemTemplate}"                 
                  ItemsSource="{Binding MovieCollection}"                               
-                 ListFooter="{Binding}"/>
+                 ListFooter="{Binding}" SelectionChanged="resultListBox_SelectionChanged"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="328,-13,0,0" VerticalAlignment="Top" Width="152" Click="Button_Click"/>
     </Grid>
 

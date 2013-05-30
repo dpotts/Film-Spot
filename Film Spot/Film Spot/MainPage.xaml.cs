@@ -17,6 +17,7 @@ namespace Film_Spot
     {
         RedditViewModel _viewModel;
         int _offsetKnob = 7;
+        MoviesResult selected;
 
         // Constructor
         public MainPage()
@@ -59,6 +60,7 @@ namespace Film_Spot
                 {
                     if ((e.Container.Content as MoviesResult).Equals(resultListBox.ItemsSource[resultListBox.ItemsSource.Count - _offsetKnob]))
                     {
+                        this.ApplicationBar.IsVisible = false;
                         _viewModel.LoadPage();
                     }
                 }
@@ -70,6 +72,47 @@ namespace Film_Spot
             Debug.WriteLine("get stuff");
             _viewModel.LoadPage();
 
+        }
+
+        private void resultListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (resultListBox.SelectedItem is Model.MoviesResult)
+            {
+                if (resultListBox.SelectedItem.Equals(selected))
+                {
+                    this.ApplicationBar.IsVisible = !this.ApplicationBar.IsVisible;
+                }
+                else
+                {
+                    this.ApplicationBar.IsVisible = true;
+                    selected = (Model.MoviesResult)resultListBox.SelectedItem;
+                }
+                resultListBox.SelectedItem = null;
+            }
+        }
+
+        private void play_clicked(object sender, EventArgs e)
+        {
+            MessageBox.Show("play " + selected.Title);
+            this.ApplicationBar.IsVisible = false;
+
+        }
+
+        private void info_clicked(object sender, EventArgs e)
+        {
+            MessageBox.Show("info " + selected.Title);
+            this.ApplicationBar.IsVisible = false;
+        }
+
+        private void share_clicked(object sender, EventArgs e)
+        {
+            MessageBox.Show("share " + selected.Title);
+            this.ApplicationBar.IsVisible = false;
+        }
+
+        private void close_clicked(object sender, EventArgs e)
+        {
+            this.ApplicationBar.IsVisible = false;
         }
     }
 }
