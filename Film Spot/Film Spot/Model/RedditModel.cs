@@ -159,6 +159,34 @@ namespace Film_Spot.Model
             }
         }
 
+        private string _rating;
+        public string Rating
+        {
+            get { return _rating; }
+            set
+            {
+                if (_rating != value)
+                {
+                    _rating = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string _imdbid;
+        public string ImdbID
+        {
+            get { return _imdbid; }
+            set
+            {
+                if (_imdbid != value)
+                {
+                    _imdbid = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

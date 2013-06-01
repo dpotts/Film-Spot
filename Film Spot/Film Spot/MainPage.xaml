@@ -91,6 +91,7 @@
                                      CreateOptions="BackgroundCreation"/>
                     </Image.Source>
                 </Image>
+
                 <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="2">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Released:" Margin="2"/>

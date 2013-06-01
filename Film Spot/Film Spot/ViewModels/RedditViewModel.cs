@@ -160,7 +160,7 @@ namespace Film_Spot.ViewModels
 
         public void LoadPage()
         {
-            Debug.WriteLine("load page");
+            //Debug.WriteLine("load page");
             IsLoading = true;
             string url = "";
             if (last_post_name == "")
@@ -178,7 +178,7 @@ namespace Film_Spot.ViewModels
 
         public void Response_Completed(IAsyncResult result)
         {
-            Debug.WriteLine("got a response");
+            //Debug.WriteLine("got a response");
             try
             {
                 HttpWebRequest request = (HttpWebRequest)result.AsyncState;
@@ -196,10 +196,31 @@ namespace Film_Spot.ViewModels
                         string[] title_year = Regex.Split(movie.data.title, @"\((.*?)\)");
                         if (title_year.Length > 0)
                         {
-                            string movie_title = title_year[0].Trim();
                             int movie_year = 0;
-                            if(title_year.Length > 1)
+                            if (title_year.Length > 1)
+                            {
+
                                 int.TryParse(title_year[1], out movie_year);
+                            }
+                            else
+                            {
+                                string[] title_year_try = Regex.Split(title_year[0], @"\[(.*?)\]");
+                                if (title_year_try.Length > 1)
+                                {
+                                    int.TryParse(title_year_try[1], out movie_year);
+                                    title_year[0] = title_year_try[0];
+                                }
+                            }
+                            
+                            string movie_title = title_year[0];
+
+                            movie_title = movie_title.Replace("&amp;", "&");
+                            movie_title = movie_title.Replace(" - ", " ");
+                            movie_title = movie_title.Replace(" HD", "");
+                            movie_title = movie_title.Replace(" 3D", "");
+                            movie_title = movie_title.Replace("  ", " ");
+                            movie_title = movie_title.Trim();
+
 
                             Get_Movie_Details(movie_title, movie_year);
 
@@ -227,9 +248,10 @@ namespace Film_Spot.ViewModels
 
         public void Get_Movie_Details(string name, int year)
         {
-            Debug.WriteLine("getting details");
+            //Debug.WriteLine("getting details");
             IsLoading = true;
             string url = "";
+            name = name.Replace("&", " ");
             if (name != "")
             {
                 if (year > 0)
@@ -252,7 +274,7 @@ namespace Film_Spot.ViewModels
 
         public void Response_Movie_Details(IAsyncResult result)
         {
-            Debug.WriteLine("got a response for details");
+            //Debug.WriteLine("got a response for details");
             RootObject_Details movie_info = new RootObject_Details();
             try
             {
@@ -274,9 +296,14 @@ namespace Film_Spot.ViewModels
                             SingleMovie.ImageUrl = movie_info.Poster;
                             SingleMovie.Runtime = movie_info.Runtime;
                             SingleMovie.Released = movie_info.Released;
+                            SingleMovie.ImdbID = movie_info.imdbID;
 
                             double rating;
                             double.TryParse(movie_info.imdbRating, out rating);
+                            if (rating > 0)
+                                SingleMovie.Rating = rating.ToString();
+                            else
+                                SingleMovie.Rating = "";
                             if (rating > 9.0)
                             {
                                 SingleMovie.Star1 = "Assets/full_star.png";
