@@ -134,9 +134,13 @@ namespace Film_Spot
 
         private void info_clicked(object sender, EventArgs e)
         {
-            //MessageBox.Show("info " + selected.Title);
-            NavigationService.Navigate(new Uri("/info.xaml?id=" + selected.ImdbID, UriKind.Relative));
-            this.ApplicationBar.IsVisible = false;
+            if (selected.ImdbID == null)
+                MessageBox.Show("No more information available for " + selected.Title);
+            else
+            {
+                NavigationService.Navigate(new Uri("/info.xaml?id=" + selected.ImdbID + "&url=" + selected.Link, UriKind.Relative));
+                this.ApplicationBar.IsVisible = false;
+            }
         }
 
         private void share_clicked(object sender, EventArgs e)

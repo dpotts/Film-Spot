@@ -16,6 +16,9 @@ namespace Film_Spot
 {
     public partial class play : PhoneApplicationPage
     {
+        string id = "";
+        string link = "";
+
         public class RootObject_Details
         {
             public string Title { get; set; }
@@ -46,7 +49,6 @@ namespace Film_Spot
         {
             base.OnNavigatedTo(e);
 
-            string id = "";
 
             if (NavigationContext.QueryString.TryGetValue("id", out id))
             {
@@ -57,11 +59,13 @@ namespace Film_Spot
                     hWebRequest.Method = "GET";
                     hWebRequest.BeginGetResponse(Response_Movie_Details, hWebRequest);
             }
+
+            NavigationContext.QueryString.TryGetValue("url", out link);
         }
 
         public void Response_Movie_Details(IAsyncResult result)
         {
-            Debug.WriteLine("got a response for details");
+            //Debug.WriteLine("got a response for details");
             RootObject_Details movie_info = new RootObject_Details();
             try
             {
@@ -76,7 +80,8 @@ namespace Film_Spot
                 }
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    poster.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(movie_info.Poster, UriKind.Absolute));
+                    if(movie_info.Poster != "N/A")
+                        poster.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(movie_info.Poster, UriKind.Absolute));
                     title.Text = movie_info.Title + " (" + movie_info.Year + ")";
                     rating.Text = movie_info.Rated;
                     plot.Text = movie_info.Plot;
@@ -96,6 +101,55 @@ namespace Film_Spot
                     MessageBox.Show("Network error occured getting movie details" + e.Message);
                 });
             }
+        }
+
+        private void play_clicked(object sender, EventArgs e)
+        {
+            //MessageBox.Show("play " + selected.Title);
+            WebBrowserTask webBrowserTask = new WebBrowserTask();
+
+            string cleaned_url = link.Replace("http://", "");
+            cleaned_url = cleaned_url.Replace("https://", "");
+            cleaned_url = cleaned_url.Replace("www.", "");
+            cleaned_url = cleaned_url.Replace("m.", "");
+            var parts = cleaned_url.Split('.');
+            string site = parts[0];
+            string id;
+            if (site == "youtube")
+            {
+                string[] args = link.Split('?');
+                string[] arg = args[args.Length - 1].Split('&');
+                string[] vid = arg[arg.Length - 1].Split('=');
+                id = vid[vid.Length - 1];
+                webBrowserTask.Uri = new Uri("http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0", UriKind.Absolute);
+            }
+            else
+            {
+                string[] args = cleaned_url.Split('/');
+                id = args[args.Length - 1];
+                if (site == "youtu")
+                    webBrowserTask.Uri = new Uri("http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0", UriKind.Absolute);
+                else
+                    webBrowserTask.Uri = new Uri("http://vimeo.com/m/" + id, UriKind.Absolute);
+
+            }
+            //Debug.WriteLine(id);
+
+
+            // webBrowserTask.Uri = new Uri(String.Format("vnd.youtube:{0}?vndapp=youtube", youTubeId), UriKind.Absolute);
+
+            webBrowserTask.Show();
+        }
+
+        private void share_clicked(object sender, EventArgs e)
+        {
+            MessageBox.Show("share");
+            //this.ApplicationBar.IsVisible = false;
+        }
+
+        private void close_clicked(object sender, EventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

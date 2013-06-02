@@ -13,6 +13,17 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
 
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="True">
+
+            <shell:ApplicationBarIconButton IconUri="Assets/transport.play.png" Text="Play" Click="play_clicked"/>
+            <shell:ApplicationBarIconButton IconUri="Assets/feature.video.png" Text="Info" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton IconUri="Assets/share.png" Text="Share" Click="share_clicked"/>
+            <shell:ApplicationBarIconButton IconUri="Assets/close.png" Text="Close" Click="close_clicked"/>
+
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>

@@ -64,6 +64,7 @@ namespace Film_Spot.ViewModels
             public string imdbID { get; set; }
             public string Type { get; set; }
             public string Response { get; set; }
+            public List<Search> Search { get; set; }
         }
 
         public class MediaEmbed
@@ -158,6 +159,14 @@ namespace Film_Spot.ViewModels
             public Data data { get; set; }
         }
 
+        public class Search
+        {
+            public string Title { get; set; }
+            public string Year { get; set; }
+            public string imdbID { get; set; }
+            public string Type { get; set; }
+        }
+
         public void LoadPage()
         {
             //Debug.WriteLine("load page");
@@ -194,7 +203,14 @@ namespace Film_Spot.ViewModels
                     foreach (var movie in movies.data.children)
                     {
                         string[] title_year = Regex.Split(movie.data.title, @"\((.*?)\)");
-                        if (title_year.Length > 0)
+                        string cleaned_url = movie.data.url.Replace("http://", "");
+                        cleaned_url = cleaned_url.Replace("https://", "");
+                        cleaned_url = cleaned_url.Replace("www.", "");
+                        cleaned_url = cleaned_url.Replace("m.", "");
+                        var parts = cleaned_url.Split('.');
+                        string site = parts[0];
+
+                        if (title_year.Length > 0 && (site == "youtube" || site == "youtu" || site == "vimeo"))
                         {
                             int movie_year = 0;
                             if (title_year.Length > 1)
@@ -214,10 +230,13 @@ namespace Film_Spot.ViewModels
                             
                             string movie_title = title_year[0];
 
-                            movie_title = movie_title.Replace("&amp;", "&");
+                            movie_title = movie_title.Replace("&amp;", " ");
                             movie_title = movie_title.Replace(" - ", " ");
                             movie_title = movie_title.Replace(" HD", "");
                             movie_title = movie_title.Replace(" 3D", "");
+                            movie_title = movie_title.Replace(":", " ");
+                            movie_title = movie_title.Replace("\"", "");
+
                             movie_title = movie_title.Replace("  ", " ");
                             movie_title = movie_title.Trim();
 
@@ -246,12 +265,11 @@ namespace Film_Spot.ViewModels
             }
         }
 
-        public void Get_Movie_Details(string name, int year)
+        public void Get_Movie_Details(string name, int year, int search = 0)
         {
             //Debug.WriteLine("getting details");
-            IsLoading = true;
+            //IsLoading = true;
             string url = "";
-            name = name.Replace("&", " ");
             if (name != "")
             {
                 if (year > 0)
@@ -260,7 +278,12 @@ namespace Film_Spot.ViewModels
                 }
                 else
                 {
-                    url = "http://www.omdbapi.com/?t=" + name;
+                    if (search == 0)
+                        url = "http://www.omdbapi.com/?t=" + name;
+                    else
+                    {
+                        url = "http://www.omdbapi.com/?s=" + name;
+                    }
                 }
                 HttpWebRequest hWebRequest = (HttpWebRequest)HttpWebRequest.Create(url);
                 hWebRequest.Method = "GET";
@@ -289,106 +312,171 @@ namespace Film_Spot.ViewModels
                 }
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    foreach (MoviesResult SingleMovie in MovieCollection)
+                    string arguments = response.ResponseUri.ToString().Replace("http://www.omdbapi.com/?", "");
+                    string[] query_type = arguments.Split('&');
+                    query_type = query_type[0].Split('=');
+                    string search_type = "";
+                    string search_title = "";
+                    if (query_type.Length > 0)
                     {
-                        if (string.Equals(movie_info.Title, SingleMovie.Title, StringComparison.CurrentCultureIgnoreCase))
+                        search_type = query_type[0];
+                        search_title = query_type[1];
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Search movie details error");
+                    }
+                    if ((movie_info.Response == "True" && movie_info.Type == "movie") || (search_type == "s" && movie_info.Response != "False" && movie_info.Search[0].Type == "movie"))
+                    {
+
+                        if(search_type == "t")
                         {
-                            SingleMovie.ImageUrl = movie_info.Poster;
-                            SingleMovie.Runtime = movie_info.Runtime;
-                            SingleMovie.Released = movie_info.Released;
-                            SingleMovie.ImdbID = movie_info.imdbID;
+                            foreach (MoviesResult SingleMovie in MovieCollection)
+                            {
+                                if (string.Equals(search_title, SingleMovie.Title, StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    SingleMovie.Title = movie_info.Title;
+                                    SingleMovie.ImageUrl = movie_info.Poster;
+                                    SingleMovie.Runtime = movie_info.Runtime;
+                                    SingleMovie.Released = movie_info.Released;
+                                    SingleMovie.ImdbID = movie_info.imdbID;
 
-                            double rating;
-                            double.TryParse(movie_info.imdbRating, out rating);
-                            if (rating > 0)
-                                SingleMovie.Rating = rating.ToString();
-                            else
-                                SingleMovie.Rating = "";
-                            if (rating > 9.0)
-                            {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/full_star.png";
-                                SingleMovie.Star3 = "Assets/full_star.png";
-                                SingleMovie.Star4 = "Assets/full_star.png";
-                                SingleMovie.Star5 = "Assets/full_star.png";
-                            }
-                            else if (rating > 8.0)
-                            {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/full_star.png";
-                                SingleMovie.Star3 = "Assets/full_star.png";
-                                SingleMovie.Star4 = "Assets/full_star.png";
-                                SingleMovie.Star5 = "Assets/half_star.png";
+                                    double rating;
+                                    double.TryParse(movie_info.imdbRating, out rating);
+                                    if (rating > 0)
+                                        SingleMovie.Rating = rating.ToString();
+                                    else
+                                        SingleMovie.Rating = "";
+                                    if (rating > 9.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/full_star.png";
+                                        SingleMovie.Star3 = "Assets/full_star.png";
+                                        SingleMovie.Star4 = "Assets/full_star.png";
+                                        SingleMovie.Star5 = "Assets/full_star.png";
+                                    }
+                                    else if (rating > 8.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/full_star.png";
+                                        SingleMovie.Star3 = "Assets/full_star.png";
+                                        SingleMovie.Star4 = "Assets/full_star.png";
+                                        SingleMovie.Star5 = "Assets/half_star.png";
 
+                                    }
+                                    else if (rating > 7.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/full_star.png";
+                                        SingleMovie.Star3 = "Assets/full_star.png";
+                                        SingleMovie.Star4 = "Assets/full_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                    else if (rating > 6.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/full_star.png";
+                                        SingleMovie.Star3 = "Assets/full_star.png";
+                                        SingleMovie.Star4 = "Assets/half_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                    else if (rating > 5.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/full_star.png";
+                                        SingleMovie.Star3 = "Assets/full_star.png";
+                                        SingleMovie.Star4 = "Assets/no_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                    else if (rating > 4.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/full_star.png";
+                                        SingleMovie.Star3 = "Assets/half_star.png";
+                                        SingleMovie.Star4 = "Assets/no_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                    else if (rating > 3.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/full_star.png";
+                                        SingleMovie.Star3 = "Assets/no_star.png";
+                                        SingleMovie.Star4 = "Assets/no_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                    else if (rating > 2.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/half_star.png";
+                                        SingleMovie.Star3 = "Assets/no_star.png";
+                                        SingleMovie.Star4 = "Assets/no_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                    else if (rating > 1.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/full_star.png";
+                                        SingleMovie.Star2 = "Assets/no_star.png";
+                                        SingleMovie.Star3 = "Assets/no_star.png";
+                                        SingleMovie.Star4 = "Assets/no_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                    else if (rating <= 1.0 & rating > 0.0)
+                                    {
+                                        SingleMovie.Star1 = "Assets/half_star.png";
+                                        SingleMovie.Star2 = "Assets/no_star.png";
+                                        SingleMovie.Star3 = "Assets/no_star.png";
+                                        SingleMovie.Star4 = "Assets/no_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                    else
+                                    {
+                                        SingleMovie.Star1 = "Assets/no_star.png";
+                                        SingleMovie.Star2 = "Assets/no_star.png";
+                                        SingleMovie.Star3 = "Assets/no_star.png";
+                                        SingleMovie.Star4 = "Assets/no_star.png";
+                                        SingleMovie.Star5 = "Assets/no_star.png";
+                                    }
+                                }
                             }
-                            else if (rating > 7.0)
+                        }
+                        else
+                        {
+                            //Debug.WriteLine("Found movie details for {0} ({1})", movie_info.Search[0].Title, search_title);
+                            int new_year = 0;
+                            int.TryParse(movie_info.Search[0].Year, out new_year);
+                            foreach (MoviesResult SingleMovie in MovieCollection)
                             {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/full_star.png";
-                                SingleMovie.Star3 = "Assets/full_star.png";
-                                SingleMovie.Star4 = "Assets/full_star.png";
-                                SingleMovie.Star5 = "Assets/no_star.png";
+                                if (string.Equals(search_title, SingleMovie.Title, StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    SingleMovie.Title = movie_info.Search[0].Title;
+                                }
                             }
-                            else if (rating > 6.0)
-                            {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/full_star.png";
-                                SingleMovie.Star3 = "Assets/full_star.png";
-                                SingleMovie.Star4 = "Assets/half_star.png";
-                                SingleMovie.Star5 = "Assets/no_star.png";
-                            }
-                            else if (rating > 5.0)
-                            {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/full_star.png";
-                                SingleMovie.Star3 = "Assets/full_star.png";
-                                SingleMovie.Star4 = "Assets/no_star.png";
-                                SingleMovie.Star5 = "Assets/no_star.png";
-                            }
-                            else if (rating > 4.0)
-                            {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/full_star.png";
-                                SingleMovie.Star3 = "Assets/half_star.png";
-                                SingleMovie.Star4 = "Assets/no_star.png";
-                                SingleMovie.Star5 = "Assets/no_star.png";
-                            }
-                            else if (rating > 3.0)
-                            {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/full_star.png";
-                                SingleMovie.Star3 = "Assets/no_star.png";
-                                SingleMovie.Star4 = "Assets/no_star.png";
-                                SingleMovie.Star5 = "Assets/no_star.png";
-                            }
-                            else if (rating > 2.0)
-                            {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/half_star.png";
-                                SingleMovie.Star3 = "Assets/no_star.png";
-                                SingleMovie.Star4 = "Assets/no_star.png";
-                                SingleMovie.Star5 = "Assets/no_star.png";
-                            }
-                            else if (rating > 1.0)
-                            {
-                                SingleMovie.Star1 = "Assets/full_star.png";
-                                SingleMovie.Star2 = "Assets/no_star.png";
-                                SingleMovie.Star3 = "Assets/no_star.png";
-                                SingleMovie.Star4 = "Assets/no_star.png";
-                                SingleMovie.Star5 = "Assets/no_star.png";
-                            }
-                            else
-                            {
-                                SingleMovie.Star1 = "Assets/half_star.png";
-                                SingleMovie.Star2 = "Assets/no_star.png";
-                                SingleMovie.Star3 = "Assets/no_star.png";
-                                SingleMovie.Star4 = "Assets/no_star.png";
-                                SingleMovie.Star5 = "Assets/no_star.png";
-                            }
-
-
+                            Get_Movie_Details(movie_info.Search[0].Title, new_year);
                         }
                     }
+                    else if (search_type == "t")
+                    {
+                        //Debug.WriteLine("Search for {0}",search_title);
+                        string[] more_cleaning_title = search_title.Split('[');
+                        more_cleaning_title = more_cleaning_title[0].Split('(');
+                        string more_cleaned_title = more_cleaning_title[0].Replace("  ", " ");
+
+                        more_cleaned_title = more_cleaned_title.Trim();
+
+                        foreach (MoviesResult SingleMovie in MovieCollection)
+                        {
+                            if (string.Equals(search_title, SingleMovie.Title, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                SingleMovie.Title = more_cleaned_title;
+                            }
+                        }
+                        Get_Movie_Details(more_cleaned_title, 0, 1);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("No {0} details available for {1}", search_type, search_title);
+                    }          
+                    
                 });
             }
             catch (Exception e)
