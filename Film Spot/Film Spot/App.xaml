@@ -8,6 +8,7 @@
     <!--Application Resources-->
     <Application.Resources>
         <local:LocalizedStrings xmlns:local="clr-namespace:Film_Spot" x:Key="LocalizedStrings"/>
+        <FontFamily x:Key="Logo_Font">/Film Spot;component/Assets/Transformers.ttf#Transformers</FontFamily>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

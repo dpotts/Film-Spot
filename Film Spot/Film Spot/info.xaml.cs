@@ -143,8 +143,13 @@ namespace Film_Spot
 
         private void share_clicked(object sender, EventArgs e)
         {
-            MessageBox.Show("share");
+            //MessageBox.Show("share");
             //this.ApplicationBar.IsVisible = false;
+            ShareLinkTask slt = new ShareLinkTask();
+            slt.Title = "Windows Phone Geek";
+            slt.Message = "Windows Phone Development Tutorials, Articles, Windows Phone News, etc.";
+            slt.LinkUri = new Uri("http://www.windowsphonegeek.com/", UriKind.Absolute);
+            slt.Show();
         }
 
         private void close_clicked(object sender, EventArgs e)

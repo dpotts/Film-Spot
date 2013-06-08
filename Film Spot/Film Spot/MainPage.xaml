@@ -16,7 +16,7 @@
     shell:SystemTray.IsVisible="True" HorizontalAlignment="Center" HorizontalContentAlignment="Left">
 
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="False">
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="False" BackgroundColor="{StaticResource PhoneAccentColor}">
 
             <shell:ApplicationBarIconButton IconUri="Assets/transport.play.png" Text="Play" Click="play_clicked"/>
             <shell:ApplicationBarIconButton IconUri="Assets/feature.video.png" Text="Info" Click="info_clicked"/>
@@ -40,7 +40,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Rectangle Fill="Black" Height="125" Width="100" Grid.Row="0" Grid.Column="0" 
+                <Rectangle Fill="{StaticResource PhoneBackgroundBrush}" Height="125" Width="80" Grid.Row="0" Grid.Column="0" 
                          VerticalAlignment="Top" Margin="0,7,7,0"
                        Grid.RowSpan="3">
 
@@ -98,8 +98,8 @@
                         <TextBlock Text="{Binding Released}" Margin="2"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Runtime:" Margin="2"/>
-                    <TextBlock Text="{Binding Runtime}" Margin="2"/>
+                        <TextBlock Text="Runtime:" Margin="2"/>
+                        <TextBlock Text="{Binding Runtime}" Margin="2"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -122,7 +122,15 @@
                  ItemTemplate="{StaticResource ResultItemTemplate}"                 
                  ItemsSource="{Binding MovieCollection}"                               
                  ListFooter="{Binding}" SelectionChanged="resultListBox_SelectionChanged"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="328,-13,0,0" VerticalAlignment="Top" Width="152" Click="Button_Click"/>
+        <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="47" Stroke="Black" VerticalAlignment="Top" Width="480"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="filmspot" VerticalAlignment="Top" Height="47" Width="167" FontFamily="{StaticResource Logo_Font}" FontSize="36" Margin="10,-5,0,0"/>
+        <TextBox x:Name="search" HorizontalAlignment="Left" Height="69" Margin="260,-11,0,0" TextWrapping="Wrap" Text="Search Films..." VerticalAlignment="Top" Width="179" Grid.RowSpan="2" FontSize="22" KeyDown="search_KeyDown" Tap="search_clear"/>
+        <Rectangle Fill="{StaticResource PhoneContrastBackgroundBrush}" Height="47" Tap="Search_Tap" Margin="426,0,0,0">
+            <Rectangle.OpacityMask>
+                <ImageBrush ImageSource="Assets/feature.search.png" Stretch="Uniform" />
+            </Rectangle.OpacityMask>
+        </Rectangle>
+        <Button x:Name="view_all" Content="View All" HorizontalAlignment="Left" Margin="154,-11,0,0" VerticalAlignment="Top" Grid.RowSpan="2" BorderThickness="0" FontFamily="Segoe WP" RenderTransformOrigin="0.492,0.515" Width="124" Click="view_all_Click" Visibility="Collapsed"/>
     </Grid>
 
 </phone:PhoneApplicationPage>

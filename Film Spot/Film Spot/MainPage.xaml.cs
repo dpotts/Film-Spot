@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Film_Spot.Model;
 using Film_Spot.ViewModels;
 using Microsoft.Phone.Tasks;
+using System.Windows.Media;
 
 
 
@@ -27,6 +28,7 @@ namespace Film_Spot
             _viewModel = (RedditViewModel)Resources["viewModel"];
             resultListBox.ItemRealized += resultListBox_ItemRealized;
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
+            _viewModel.LoadPage();
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -66,13 +68,6 @@ namespace Film_Spot
                     }
                 }
             }
-        }
-    
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Debug.WriteLine("get stuff");
-            _viewModel.LoadPage();
-
         }
 
         private void resultListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -152,6 +147,33 @@ namespace Film_Spot
         private void close_clicked(object sender, EventArgs e)
         {
             this.ApplicationBar.IsVisible = false;
+        }
+
+        private void Search_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            view_all.Visibility = Visibility.Visible;
+            _viewModel.set_search(search.Text);
+        }
+
+        private void search_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {                
+                view_all.Visibility = Visibility.Visible;
+                _viewModel.set_search(search.Text);
+                this.Focus();
+            }
+        }
+
+        private void search_clear(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            search.Text = string.Empty;
+        }
+
+        private void view_all_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.clear_search();
+            view_all.Visibility = Visibility.Collapsed;
         }
     }
 }

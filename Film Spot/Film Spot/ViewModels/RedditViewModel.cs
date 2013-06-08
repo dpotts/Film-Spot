@@ -17,6 +17,7 @@ namespace Film_Spot.ViewModels
     {
         string json = "";
         string last_post_name = "";
+        string search = "";
         RootObject movies = new RootObject();
         private bool _isLoading = false;
 
@@ -167,22 +168,61 @@ namespace Film_Spot.ViewModels
             public string Type { get; set; }
         }
 
+        public void set_search(string search_input)
+        {
+            search = search_input;
+            this.MovieCollection.Clear();
+            last_post_name = "";
+            LoadPage();
+        }
+
+        public void clear_search()
+        {
+            search = "";
+            this.MovieCollection.Clear();
+            last_post_name = "";
+            LoadPage();
+        }
+
         public void LoadPage()
         {
-            //Debug.WriteLine("load page");
             IsLoading = true;
             string url = "";
-            if (last_post_name == "")
+            if (string.IsNullOrEmpty(last_post_name))
             {
-                url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json";
+                if (MovieCollection.Count == 0)
+                {
+                    if (!string.IsNullOrEmpty(search))
+                    {
+                        url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on";
+                    }
+                    else
+                    {
+                        url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json";
+                    }
+                }
             }
             else
             {
-                url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json?after=" + last_post_name;
+                if (!string.IsNullOrEmpty(search))
+                {
+                    url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on&after=" + last_post_name;
+                }
+                else
+                {
+                    url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json?after=" + last_post_name;
+                }
             }
-            HttpWebRequest hWebRequest = (HttpWebRequest)HttpWebRequest.Create(url);
-            hWebRequest.Method = "GET";
-            hWebRequest.BeginGetResponse(Response_Completed, hWebRequest);
+            if (!string.IsNullOrEmpty(url))
+            {
+                HttpWebRequest hWebRequest = (HttpWebRequest)HttpWebRequest.Create(url);
+                hWebRequest.Method = "GET";
+                hWebRequest.BeginGetResponse(Response_Completed, hWebRequest);
+            }
+            else
+            {
+                    IsLoading = false;
+            }
         }
 
         public void Response_Completed(IAsyncResult result)
@@ -200,59 +240,76 @@ namespace Film_Spot.ViewModels
                 }
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    foreach (var movie in movies.data.children)
+                    if (movies.data.children.Count == 0)
                     {
-                        string[] title_year = Regex.Split(movie.data.title, @"\((.*?)\)");
-                        string cleaned_url = movie.data.url.Replace("http://", "");
-                        cleaned_url = cleaned_url.Replace("https://", "");
-                        cleaned_url = cleaned_url.Replace("www.", "");
-                        cleaned_url = cleaned_url.Replace("m.", "");
-                        var parts = cleaned_url.Split('.');
-                        string site = parts[0];
-
-                        if (title_year.Length > 0 && (site == "youtube" || site == "youtu" || site == "vimeo"))
+                        if (string.IsNullOrEmpty(search))
                         {
-                            int movie_year = 0;
-                            if (title_year.Length > 1)
-                            {
-
-                                int.TryParse(title_year[1], out movie_year);
-                            }
-                            else
-                            {
-                                string[] title_year_try = Regex.Split(title_year[0], @"\[(.*?)\]");
-                                if (title_year_try.Length > 1)
-                                {
-                                    int.TryParse(title_year_try[1], out movie_year);
-                                    title_year[0] = title_year_try[0];
-                                }
-                            }
-                            
-                            string movie_title = title_year[0];
-
-                            movie_title = movie_title.Replace("&amp;", " ");
-                            movie_title = movie_title.Replace(" - ", " ");
-                            movie_title = movie_title.Replace(" HD", "");
-                            movie_title = movie_title.Replace(" 3D", "");
-                            movie_title = movie_title.Replace(":", " ");
-                            movie_title = movie_title.Replace("\"", "");
-
-                            movie_title = movie_title.Replace("  ", " ");
-                            movie_title = movie_title.Trim();
-
-
-                            Get_Movie_Details(movie_title, movie_year);
-
-                            this.MovieCollection.Add(new MoviesResult()
-                            {
-                                Title = movie_title,
-                                Runtime = "Unknown",
-                                Released = "Unknown",
-                                Link = movie.data.url
-                            });
+                            MessageBox.Show("No Movies Available To Watch.  Please Come Back Later.");
                         }
-                    }  
-                    last_post_name = movies.data.after;
+                        else
+                        {
+                            MessageBox.Show("No Movie Found Called " + search);
+                            search = "";
+                            last_post_name = "";
+                            LoadPage();
+                        }
+                    }
+                    else
+                    {
+                        foreach (var movie in movies.data.children)
+                        {
+                            string[] title_year = Regex.Split(movie.data.title, @"\((.*?)\)");
+                            string cleaned_url = movie.data.url.Replace("http://", "");
+                            cleaned_url = cleaned_url.Replace("https://", "");
+                            cleaned_url = cleaned_url.Replace("www.", "");
+                            cleaned_url = cleaned_url.Replace("m.", "");
+                            var parts = cleaned_url.Split('.');
+                            string site = parts[0];
+
+                            if (title_year.Length > 0 && (site == "youtube" || site == "youtu" || site == "vimeo"))
+                            {
+                                int movie_year = 0;
+                                if (title_year.Length > 1)
+                                {
+
+                                    int.TryParse(title_year[1], out movie_year);
+                                }
+                                else
+                                {
+                                    string[] title_year_try = Regex.Split(title_year[0], @"\[(.*?)\]");
+                                    if (title_year_try.Length > 1)
+                                    {
+                                        int.TryParse(title_year_try[1], out movie_year);
+                                        title_year[0] = title_year_try[0];
+                                    }
+                                }
+
+                                string movie_title = title_year[0];
+
+                                movie_title = movie_title.Replace("&amp;", " ");
+                                movie_title = movie_title.Replace(" - ", " ");
+                                movie_title = movie_title.Replace(" HD", "");
+                                movie_title = movie_title.Replace(" 3D", "");
+                                movie_title = movie_title.Replace(":", " ");
+                                movie_title = movie_title.Replace("\"", "");
+
+                                movie_title = movie_title.Replace("  ", " ");
+                                movie_title = movie_title.Trim();
+
+
+                                Get_Movie_Details(movie_title, movie_year);
+
+                                this.MovieCollection.Add(new MoviesResult()
+                                {
+                                    Title = movie_title,
+                                    Runtime = "Unknown",
+                                    Released = "Unknown",
+                                    Link = movie.data.url
+                                });
+                            }
+                        }
+                        last_post_name = movies.data.after;
+                    }
                     IsLoading = false;
                 });
             }
