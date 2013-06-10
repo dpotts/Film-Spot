@@ -197,6 +197,8 @@ namespace Film_Spot.Model
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public string Share_URL { get; set; }
     }
 }
 

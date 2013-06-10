@@ -27,3 +27,7 @@ C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bi
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Microsoft.Threading.Tasks.Extensions.Phone.xml
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\info.g.cs
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Microsoft.Phone.Controls.Toolkit.dll
+C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\browse.g.cs
+C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Microsoft.Phone.Controls.dll
+C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\search.g.cs
+C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\faq.g.cs

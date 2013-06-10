@@ -176,8 +176,14 @@ namespace Film_Spot.ViewModels
             LoadPage();
         }
 
+        public string get_search()
+        {
+            return search;
+        }
+
         public void clear_search()
         {
+            Debug.WriteLine("here1");
             search = "";
             this.MovieCollection.Clear();
             last_post_name = "";
@@ -190,20 +196,25 @@ namespace Film_Spot.ViewModels
             string url = "";
             if (string.IsNullOrEmpty(last_post_name))
             {
+                Debug.WriteLine("here4");
                 if (MovieCollection.Count == 0)
                 {
                     if (!string.IsNullOrEmpty(search))
                     {
+                        Debug.WriteLine("here2 " + search);
                         url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on";
                     }
                     else
                     {
+                        Debug.WriteLine("here3");
+
                         url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json";
                     }
                 }
             }
             else
             {
+                Debug.WriteLine("here5");
                 if (!string.IsNullOrEmpty(search))
                 {
                     url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on&after=" + last_post_name;
@@ -289,6 +300,12 @@ namespace Film_Spot.ViewModels
                                 movie_title = movie_title.Replace("&amp;", " ");
                                 movie_title = movie_title.Replace(" - ", " ");
                                 movie_title = movie_title.Replace(" HD", "");
+                                movie_title = movie_title.Replace(" SD", "");
+                                movie_title = movie_title.Replace(" 3D", "");
+                                movie_title = movie_title.Replace(" 720p", "");
+                                movie_title = movie_title.Replace(" 1080p", "");
+                                movie_title = movie_title.Replace(" 360p", "");
+                                movie_title = movie_title.Replace(" 240p", "");
                                 movie_title = movie_title.Replace(" 3D", "");
                                 movie_title = movie_title.Replace(":", " ");
                                 movie_title = movie_title.Replace("\"", "");
@@ -298,13 +315,43 @@ namespace Film_Spot.ViewModels
 
 
                                 Get_Movie_Details(movie_title, movie_year);
+                                string url = "";
+                                string share_url = "";
+                                string id;
+                                if (site == "youtube")
+                                {
+                                    string[] args = movie.data.url.Split('?');
+                                    string[] arg = args[args.Length - 1].Split('&');
+                                    string[] vid = arg[arg.Length - 1].Split('=');
+                                    id = vid[vid.Length - 1];
+                                    url = "http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0";
+                                    share_url = "http://www.youtube.com/v/" + id;
+                                }
+                                else
+                                {
+                                    string[] args = cleaned_url.Split('/');
+                                    id = args[args.Length - 1];
+                                    if (site == "youtu")
+                                    {
+                                        share_url = "http://www.youtube.com/v/" + id;
+                                        url = "http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0";
+                                    }
+                                    else
+                                    {
+                                        share_url = "http://www.vimeo.com/" + id;
+                                        url = "http://vimeo.com/m/" + id;
+                                    }
+
+                                }
 
                                 this.MovieCollection.Add(new MoviesResult()
                                 {
                                     Title = movie_title,
                                     Runtime = "Unknown",
                                     Released = "Unknown",
-                                    Link = movie.data.url
+                                    Share_URL = share_url,
+                                    Link = url,
+
                                 });
                             }
                         }

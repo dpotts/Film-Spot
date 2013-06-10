@@ -11,169 +11,73 @@ using Film_Spot.ViewModels;
 using Microsoft.Phone.Tasks;
 using System.Windows.Media;
 
+using System.Linq;
 
 
 namespace Film_Spot
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        RedditViewModel _viewModel;
-        int _offsetKnob = 7;
-        MoviesResult selected;
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
-            _viewModel = (RedditViewModel)Resources["viewModel"];
-            resultListBox.ItemRealized += resultListBox_ItemRealized;
-            this.Loaded += new RoutedEventHandler(MainPage_Loaded);
-            _viewModel.LoadPage();
-        }
 
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            var progressIndicator = SystemTray.ProgressIndicator;
-            if (progressIndicator != null)
+            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains("MainPage.xaml"));
+            if (tile != null)
             {
-                return;
+                ApplicationBarIconButton btn = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+
+                btn.IsEnabled = false;
             }
 
-            progressIndicator = new ProgressIndicator();
-
-            SystemTray.SetProgressIndicator(this, progressIndicator);
-
-            Binding binding = new Binding("IsLoading") { Source = _viewModel };
-            BindingOperations.SetBinding(
-                progressIndicator, ProgressIndicator.IsVisibleProperty, binding);
-
-            binding = new Binding("IsLoading") { Source = _viewModel };
-            BindingOperations.SetBinding(
-                progressIndicator, ProgressIndicator.IsIndeterminateProperty, binding);
-
-            progressIndicator.Text = "Loading Movies...";
-
         }
 
-        void resultListBox_ItemRealized(object sender, ItemRealizationEventArgs e)
+        private void browse_Click(object sender, RoutedEventArgs e)
         {
-            if (!_viewModel.IsLoading && resultListBox.ItemsSource != null && resultListBox.ItemsSource.Count >= _offsetKnob)
-            {
-                if (e.ItemKind == LongListSelectorItemKind.Item)
-                {
-                    if ((e.Container.Content as MoviesResult).Equals(resultListBox.ItemsSource[resultListBox.ItemsSource.Count - _offsetKnob]))
-                    {
-                        this.ApplicationBar.IsVisible = false;
-                        _viewModel.LoadPage();
-                    }
-                }
-            }
+            NavigationService.Navigate(new Uri("/browse.xaml", UriKind.Relative));
         }
 
-        private void resultListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void search_Click(object sender, RoutedEventArgs e)
         {
-            if (resultListBox.SelectedItem is Model.MoviesResult)
-            {
-                if (resultListBox.SelectedItem.Equals(selected))
-                {
-                    this.ApplicationBar.IsVisible = !this.ApplicationBar.IsVisible;
-                }
-                else
-                {
-                    this.ApplicationBar.IsVisible = true;
-                    selected = (Model.MoviesResult)resultListBox.SelectedItem;
-                }
-            }
-            resultListBox.SelectedItem = null;
+            NavigationService.Navigate(new Uri("/search.xaml", UriKind.Relative));
         }
 
-        private void play_clicked(object sender, EventArgs e)
+        private void pin_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("play " + selected.Title);
-            WebBrowserTask webBrowserTask = new WebBrowserTask();
+            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains("MainPage.xaml"));
 
-            string cleaned_url = selected.Link.Replace("http://", "");
-            cleaned_url = cleaned_url.Replace("https://", "");
-            cleaned_url = cleaned_url.Replace("www.", "");
-            cleaned_url = cleaned_url.Replace("m.", "");
-            var parts = cleaned_url.Split('.');
-            string site = parts[0];
-            string id;
-            if (site == "youtube")
+            if (tile == null)
             {
-                string[] args = selected.Link.Split('?');
-                string[] arg = args[args.Length - 1].Split('&');
-                string[] vid = arg[arg.Length - 1].Split('=');
-                id = vid[vid.Length - 1];
-                webBrowserTask.Uri = new Uri("http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0", UriKind.Absolute);
+                IconicTileData icontile = new IconicTileData();
+                icontile.Title = "FilmSpot";
+                //icontile.Count = ;
+
+                icontile.IconImage = new Uri("Assets/Tiles/IconicTileMediumLarge.png", UriKind.Relative);
+                icontile.SmallIconImage = new Uri("Assets/Tiles/IconicTileSmall.png", UriKind.Relative);
+                //icontile.WideContent1 = "";
+                //icontile.WideContent2 = "";
+                // icontile.WideContent3 = "";
+
+                ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), icontile, true);
             }
             else
             {
-                string[] args = cleaned_url.Split('/');
-                id = args[args.Length - 1];
-                if (site == "youtu")
-                    webBrowserTask.Uri = new Uri("http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0", UriKind.Absolute);
-                else
-                    webBrowserTask.Uri = new Uri("http://vimeo.com/m/" + id, UriKind.Absolute);
-
-            }
-            //Debug.WriteLine(id);
-
-
-            // webBrowserTask.Uri = new Uri(String.Format("vnd.youtube:{0}?vndapp=youtube", youTubeId), UriKind.Absolute);
-
-            webBrowserTask.Show();
-            selected = null;
-            this.ApplicationBar.IsVisible = false;
-        }
-
-        private void info_clicked(object sender, EventArgs e)
-        {
-            if (selected.ImdbID == null)
-                MessageBox.Show("No more information available for " + selected.Title);
-            else
-            {
-                NavigationService.Navigate(new Uri("/info.xaml?id=" + selected.ImdbID + "&url=" + selected.Link, UriKind.Relative));
-                this.ApplicationBar.IsVisible = false;
+                MessageBox.Show("Already Pinned To Start");
             }
         }
 
-        private void share_clicked(object sender, EventArgs e)
+        private void rate_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("share " + selected.Title);
-            this.ApplicationBar.IsVisible = false;
+            MarketplaceReviewTask marketplaceReviewTask = new MarketplaceReviewTask();
+
+            marketplaceReviewTask.Show();
         }
 
-        private void close_clicked(object sender, EventArgs e)
+        private void faq_Click(object sender, EventArgs e)
         {
-            this.ApplicationBar.IsVisible = false;
-        }
-
-        private void Search_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            view_all.Visibility = Visibility.Visible;
-            _viewModel.set_search(search.Text);
-        }
-
-        private void search_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {                
-                view_all.Visibility = Visibility.Visible;
-                _viewModel.set_search(search.Text);
-                this.Focus();
-            }
-        }
-
-        private void search_clear(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            search.Text = string.Empty;
-        }
-
-        private void view_all_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.clear_search();
-            view_all.Visibility = Visibility.Collapsed;
+            NavigationService.Navigate(new Uri("/faq.xaml", UriKind.Relative));
         }
     }
 }

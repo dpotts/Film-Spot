@@ -18,6 +18,9 @@ namespace Film_Spot
     {
         string id = "";
         string link = "";
+        string share_link = "";
+        string movie_title = "";
+        string search_string = "";
 
         public class RootObject_Details
         {
@@ -61,6 +64,9 @@ namespace Film_Spot
             }
 
             NavigationContext.QueryString.TryGetValue("url", out link);
+            NavigationContext.QueryString.TryGetValue("share_link", out share_link);
+            NavigationContext.QueryString.TryGetValue("search", out search_string);
+
         }
 
         public void Response_Movie_Details(IAsyncResult result)
@@ -82,6 +88,7 @@ namespace Film_Spot
                 {
                     if(movie_info.Poster != "N/A")
                         poster.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(movie_info.Poster, UriKind.Absolute));
+                    movie_title = movie_info.Title;
                     title.Text = movie_info.Title + " (" + movie_info.Year + ")";
                     rating.Text = movie_info.Rated;
                     plot.Text = movie_info.Plot;
@@ -105,56 +112,29 @@ namespace Film_Spot
 
         private void play_clicked(object sender, EventArgs e)
         {
-            //MessageBox.Show("play " + selected.Title);
             WebBrowserTask webBrowserTask = new WebBrowserTask();
-
-            string cleaned_url = link.Replace("http://", "");
-            cleaned_url = cleaned_url.Replace("https://", "");
-            cleaned_url = cleaned_url.Replace("www.", "");
-            cleaned_url = cleaned_url.Replace("m.", "");
-            var parts = cleaned_url.Split('.');
-            string site = parts[0];
-            string id;
-            if (site == "youtube")
-            {
-                string[] args = link.Split('?');
-                string[] arg = args[args.Length - 1].Split('&');
-                string[] vid = arg[arg.Length - 1].Split('=');
-                id = vid[vid.Length - 1];
-                webBrowserTask.Uri = new Uri("http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0", UriKind.Absolute);
-            }
-            else
-            {
-                string[] args = cleaned_url.Split('/');
-                id = args[args.Length - 1];
-                if (site == "youtu")
-                    webBrowserTask.Uri = new Uri("http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0", UriKind.Absolute);
-                else
-                    webBrowserTask.Uri = new Uri("http://vimeo.com/m/" + id, UriKind.Absolute);
-
-            }
-            //Debug.WriteLine(id);
-
-
-            // webBrowserTask.Uri = new Uri(String.Format("vnd.youtube:{0}?vndapp=youtube", youTubeId), UriKind.Absolute);
-
+            webBrowserTask.Uri = new Uri(link, UriKind.Absolute);
             webBrowserTask.Show();
         }
 
         private void share_clicked(object sender, EventArgs e)
         {
-            //MessageBox.Show("share");
-            //this.ApplicationBar.IsVisible = false;
             ShareLinkTask slt = new ShareLinkTask();
-            slt.Title = "Windows Phone Geek";
-            slt.Message = "Windows Phone Development Tutorials, Articles, Windows Phone News, etc.";
-            slt.LinkUri = new Uri("http://www.windowsphonegeek.com/", UriKind.Absolute);
+            slt.Title = movie_title + " on FilmSpot";
+            slt.Message = "I found " + movie_title + " for free on FilmSpot. Check it out!";
+            slt.LinkUri = new Uri(share_link, UriKind.Absolute);
             slt.Show();
         }
 
         private void close_clicked(object sender, EventArgs e)
         {
-            NavigationService.GoBack();
+            //NavigationService.GoBack();
+            if(string.IsNullOrEmpty(search_string)){
+                NavigationService.Navigate(new Uri("/browse.xaml", UriKind.Relative));
+            } else {
+                NavigationService.Navigate(new Uri("/browse.xaml?title=" + search_string, UriKind.Relative));
+
+            }
         }
     }
 }

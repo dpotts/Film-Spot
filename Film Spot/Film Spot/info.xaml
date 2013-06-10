@@ -14,10 +14,10 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="True">
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="True" BackgroundColor="{StaticResource PhoneAccentColor}">
 
             <shell:ApplicationBarIconButton IconUri="Assets/transport.play.png" Text="Play" Click="play_clicked"/>
-            <shell:ApplicationBarIconButton IconUri="Assets/feature.video.png" Text="Info" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton IconUri="Assets/appbar.information.png" Text="Info" IsEnabled="False"/>
             <shell:ApplicationBarIconButton IconUri="Assets/share.png" Text="Share" Click="share_clicked"/>
             <shell:ApplicationBarIconButton IconUri="Assets/close.png" Text="Close" Click="close_clicked"/>
 
@@ -35,21 +35,19 @@
         <StackPanel Grid.Row="0" Margin="12,17,0,28"/>
 
 
-        <TextBlock x:Name="title" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap" FontSize="24" Foreground="Red"/>
-
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,10,12,0">
 
             <Image x:Name="poster" HorizontalAlignment="Left" Height="290" VerticalAlignment="Top" Width="208"/>
 
-            <TextBlock HorizontalAlignment="Left" Margin="208,-7,0,0" TextWrapping="Wrap" Text="Rating" VerticalAlignment="Top" Foreground="Red"/>
-            <TextBlock HorizontalAlignment="Left" Margin="208,43,0,0" TextWrapping="Wrap" Text="Genre" VerticalAlignment="Top" Foreground="Red"/>
-            <TextBlock HorizontalAlignment="Left" Margin="208,142,0,0" TextWrapping="Wrap" Text="IMDb Rating" VerticalAlignment="Top" Foreground="Red"/>
-            <TextBlock HorizontalAlignment="Left" Margin="208,192,0,0" TextWrapping="Wrap" Text="Rotten Tomatoes Rating" VerticalAlignment="Top" Foreground="Red"/>
-            <TextBlock HorizontalAlignment="Left" Margin="208,242,0,0" TextWrapping="Wrap" Text="Runtime" VerticalAlignment="Top" Foreground="Red"/>
-            <TextBlock HorizontalAlignment="Left" Margin="0,321,0,0" TextWrapping="Wrap" Text="Directors" VerticalAlignment="Top" Foreground="Red"/>
-            <TextBlock HorizontalAlignment="Left" Margin="0,348,0,0" TextWrapping="Wrap" Text="Actors" VerticalAlignment="Top" Foreground="Red"/>
-            <TextBlock HorizontalAlignment="Left" Margin="0,395,0,0"   TextWrapping="Wrap" Text="Plot"  VerticalAlignment="Top" Foreground="Red"/>
+            <TextBlock HorizontalAlignment="Left" Margin="208,-7,0,0" TextWrapping="Wrap" Text="Rating" VerticalAlignment="Top" Foreground="{StaticResource PhoneAccentBrush}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="208,43,0,0" TextWrapping="Wrap" Text="Genre" VerticalAlignment="Top" Foreground="{StaticResource PhoneAccentBrush}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="208,142,0,0" TextWrapping="Wrap" Text="IMDb Rating" VerticalAlignment="Top" Foreground="{StaticResource PhoneAccentBrush}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="208,192,0,0" TextWrapping="Wrap" Text="Rotten Tomatoes Rating" VerticalAlignment="Top" Foreground="{StaticResource PhoneAccentBrush}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="208,242,0,0" TextWrapping="Wrap" Text="Runtime" VerticalAlignment="Top" Foreground="{StaticResource PhoneAccentBrush}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,321,0,0" TextWrapping="Wrap" Text="Directors" VerticalAlignment="Top" Foreground="{StaticResource PhoneAccentBrush}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,348,0,0" TextWrapping="Wrap" Text="Actors" VerticalAlignment="Top" Foreground="{StaticResource PhoneAccentBrush}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,395,0,0"   TextWrapping="Wrap" Text="Plot"  VerticalAlignment="Top" Foreground="{StaticResource PhoneAccentBrush}"/>
 
             <TextBlock x:Name="rating" HorizontalAlignment="Left" Margin="208,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
             <TextBlock x:Name="genre" HorizontalAlignment="Left" Margin="208,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
@@ -68,7 +66,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="12,304,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top">
         	<Run Text="Writers">
         		<Run.Foreground>
-        			<SolidColorBrush Color="Red">
+        			<SolidColorBrush Color="{StaticResource PhoneAccentColor}">
         				<SolidColorBrush.RelativeTransform>
         					<MatrixTransform Matrix="Identity"/>
         				</SolidColorBrush.RelativeTransform>
@@ -79,6 +77,12 @@
         		</Run.Foreground>
         	</Run>
         </TextBlock>
+
+        <Border Background="{StaticResource PhoneAccentBrush}"  VerticalAlignment="Top" Width="480">
+            <TextBlock x:Name="title" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap" FontSize="24" Foreground="{StaticResource PhoneContrastBackgroundBrush}"/>
+        </Border>
+
+
     </Grid>
 
 </phone:PhoneApplicationPage>

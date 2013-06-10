@@ -4,110 +4,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:vm="clr-namespace:Film_Spot.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"     
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"    
-    xmlns:viewmodels="clr-namespace:Film_Spot.ViewModels"
-    shell:SystemTray.IsVisible="True" HorizontalAlignment="Center" HorizontalContentAlignment="Left">
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="False" BackgroundColor="{StaticResource PhoneAccentColor}">
-
-            <shell:ApplicationBarIconButton IconUri="Assets/transport.play.png" Text="Play" Click="play_clicked"/>
-            <shell:ApplicationBarIconButton IconUri="Assets/feature.video.png" Text="Info" Click="info_clicked"/>
-            <shell:ApplicationBarIconButton IconUri="Assets/share.png" Text="Share" Click="share_clicked"/>
-            <shell:ApplicationBarIconButton IconUri="Assets/close.png" Text="Close" Click="close_clicked"/>
-
+        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="True" BackgroundColor="{StaticResource PhoneAccentColor}">
+            <shell:ApplicationBarIconButton x:Name="pin" IconUri="Assets/appbar.pin.png" Text="pin to start" Click="pin_Click" />
+            <shell:ApplicationBarIconButton x:Name="faq" IconUri="Assets/appbar.question.png" Text="faq" Click="faq_Click" />
+            <shell:ApplicationBarIconButton x:Name="rate" IconUri="Assets/appbar.star.png" Text="rate" Click="rate_Click" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
-    <phone:PhoneApplicationPage.Resources>
-
-        <vm:RedditViewModel x:Key="viewModel"/>
-
-        <DataTemplate x:Key="ResultItemTemplate">
-            <Grid Margin="5,0,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Rectangle Fill="{StaticResource PhoneBackgroundBrush}" Height="125" Width="80" Grid.Row="0" Grid.Column="0" 
-                         VerticalAlignment="Top" Margin="0,7,7,0"
-                       Grid.RowSpan="3">
-
-                </Rectangle>
-                <Image Height="125" Width="100" Grid.Row="0" Grid.Column="0" 
-                         VerticalAlignment="Top" Margin="0,7,7,0"
-                       Grid.RowSpan="3">
-                    <Image.Source>
-                        <BitmapImage UriSource="{Binding ImageUrl}"
-                                     CreateOptions="BackgroundCreation"/>
-                    </Image.Source>
-                </Image>
-                <TextBlock Text="{Binding Title}" Grid.Row="0" Grid.Column="1"
-                                 Foreground="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top"/>
-
-                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
-                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,7,7,0">
-                    <Image.Source>
-                        <BitmapImage UriSource="{Binding Star1}"
-                                     CreateOptions="BackgroundCreation"/>
-                    </Image.Source>
-                </Image>
-                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
-                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="28,7,7,0">
-                    <Image.Source>
-                        <BitmapImage UriSource="{Binding Star2}"
-                                     CreateOptions="BackgroundCreation"/>
-                    </Image.Source>
-                </Image>
-                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
-                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="56,7,7,0">
-                    <Image.Source>
-                        <BitmapImage UriSource="{Binding Star3}"
-                                     CreateOptions="BackgroundCreation"/>
-                    </Image.Source>
-                </Image>
-                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
-                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="84,7,7,0">
-                    <Image.Source>
-                        <BitmapImage UriSource="{Binding Star4}"
-                                     CreateOptions="BackgroundCreation"/>
-                    </Image.Source>
-                </Image>
-                <Image Height="24" Width="24" Grid.Row="1" Grid.Column="1" 
-                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="112,7,7,0">
-                    <Image.Source>
-                        <BitmapImage UriSource="{Binding Star5}"
-                                     CreateOptions="BackgroundCreation"/>
-                    </Image.Source>
-                </Image>
-
-                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="2">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Released:" Margin="2"/>
-                        <TextBlock Text="{Binding Released}" Margin="2"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Runtime:" Margin="2"/>
-                        <TextBlock Text="{Binding Runtime}" Margin="2"/>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
-
-    </phone:PhoneApplicationPage.Resources>
-
-    <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
+    <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -115,22 +29,20 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,12" />
+        <StackPanel Grid.Row="0" Margin="0,0,0,28" Background="{StaticResource PhoneAccentBrush}">
+            <TextBlock Text="filmspot" Margin="0,0,0,28" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/Film Spot;component/Assets/Transformers.ttf#Transformers" Foreground="{StaticResource PhoneContrastBackgroundBrush}" FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
 
-        <phone:LongListSelector Name="resultListBox" Grid.Row="1"
-                 DataContext="{StaticResource viewModel}"
-                 ItemTemplate="{StaticResource ResultItemTemplate}"                 
-                 ItemsSource="{Binding MovieCollection}"                               
-                 ListFooter="{Binding}" SelectionChanged="resultListBox_SelectionChanged"/>
-        <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="47" Stroke="Black" VerticalAlignment="Top" Width="480"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="filmspot" VerticalAlignment="Top" Height="47" Width="167" FontFamily="{StaticResource Logo_Font}" FontSize="36" Margin="10,-5,0,0"/>
-        <TextBox x:Name="search" HorizontalAlignment="Left" Height="69" Margin="260,-11,0,0" TextWrapping="Wrap" Text="Search Films..." VerticalAlignment="Top" Width="179" Grid.RowSpan="2" FontSize="22" KeyDown="search_KeyDown" Tap="search_clear"/>
-        <Rectangle Fill="{StaticResource PhoneContrastBackgroundBrush}" Height="47" Tap="Search_Tap" Margin="426,0,0,0">
-            <Rectangle.OpacityMask>
-                <ImageBrush ImageSource="Assets/feature.search.png" Stretch="Uniform" />
-            </Rectangle.OpacityMask>
-        </Rectangle>
-        <Button x:Name="view_all" Content="View All" HorizontalAlignment="Left" Margin="154,-11,0,0" VerticalAlignment="Top" Grid.RowSpan="2" BorderThickness="0" FontFamily="Segoe WP" RenderTransformOrigin="0.492,0.515" Width="124" Click="view_all_Click" Visibility="Collapsed"/>
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,10,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="browse" Content="Browse" HorizontalAlignment="Center" Margin="0,48,0,0" VerticalAlignment="Top" Click="browse_Click" BorderThickness="0" Foreground="{StaticResource PhoneAccentBrush}" FontSize="36" Grid.Column="1" Height="83" Width="163"/>
+            <Button x:Name="search" Grid.ColumnSpan="2" Content="Search" HorizontalAlignment="Center" Margin="147,163,146,0" VerticalAlignment="Top" Width="163" FontSize="36" BorderThickness="0" Foreground="{StaticResource PhoneAccentBrush}" Click="search_Click"/>
+
+        </Grid>
     </Grid>
 
 </phone:PhoneApplicationPage>
