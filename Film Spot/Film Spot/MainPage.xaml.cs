@@ -10,7 +10,6 @@ using Film_Spot.Model;
 using Film_Spot.ViewModels;
 using Microsoft.Phone.Tasks;
 using System.Windows.Media;
-
 using System.Linq;
 
 

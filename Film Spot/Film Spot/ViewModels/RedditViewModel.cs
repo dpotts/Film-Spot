@@ -183,7 +183,6 @@ namespace Film_Spot.ViewModels
 
         public void clear_search()
         {
-            Debug.WriteLine("here1");
             search = "";
             this.MovieCollection.Clear();
             last_post_name = "";
@@ -196,17 +195,14 @@ namespace Film_Spot.ViewModels
             string url = "";
             if (string.IsNullOrEmpty(last_post_name))
             {
-                Debug.WriteLine("here4");
                 if (MovieCollection.Count == 0)
                 {
                     if (!string.IsNullOrEmpty(search))
                     {
-                        Debug.WriteLine("here2 " + search);
                         url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on";
                     }
                     else
                     {
-                        Debug.WriteLine("here3");
 
                         url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json";
                     }
@@ -214,7 +210,6 @@ namespace Film_Spot.ViewModels
             }
             else
             {
-                Debug.WriteLine("here5");
                 if (!string.IsNullOrEmpty(search))
                 {
                     url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on&after=" + last_post_name;

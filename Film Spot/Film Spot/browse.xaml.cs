@@ -172,7 +172,11 @@ namespace Film_Spot
             selected = null;
             this.ApplicationBar.IsVisible = false;
             _viewModel.LoadPage();
-            Debug.WriteLine("back here");
+        }
+
+        private void logo_tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
     }
 }

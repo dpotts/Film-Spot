@@ -45,5 +45,10 @@ namespace Film_Spot
         {
             search_box.Text = string.Empty;
         }
+
+        private void logo_tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
     }
 }

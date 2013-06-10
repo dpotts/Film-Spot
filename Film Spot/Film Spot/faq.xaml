@@ -37,7 +37,7 @@
         <TextBlock HorizontalAlignment="Left" Height="149" TextWrapping="Wrap" Text="FAQ" VerticalAlignment="Top" Width="460" Margin="10,28,0,0" Foreground="{StaticResource PhoneAccentBrush}" FontSize="120" FontFamily="Segoe WP Light"/>
 
         <StackPanel Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" Margin="0,0,0,682" VerticalAlignment="Top">
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="filmspot" VerticalAlignment="Top" Height="47" Width="167" FontFamily="{StaticResource Logo_Font}" FontSize="36" Margin="10,-5,0,0"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="filmspot" VerticalAlignment="Top" Height="47" Width="167" FontFamily="{StaticResource Logo_Font}" FontSize="36" Margin="10,-5,0,0" Tap="logo_tap"/>
         </StackPanel>
     </Grid>
 
