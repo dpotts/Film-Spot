@@ -1,9 +1,4 @@
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Assets\ApplicationIcon.png
-C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Assets\Tiles\FlipCycleTileLarge.png
-C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png
-C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Assets\Tiles\FlipCycleTileSmall.png
-C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Assets\Tiles\IconicTileMediumLarge.png
-C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Assets\Tiles\IconicTileSmall.png
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Film Spot.dll
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\Film Spot.pdb
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\AppManifest.xaml
@@ -57,3 +52,4 @@ C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bi
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\sv-SE\Microsoft.Advertising.Mobile.resources.dll
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\zh-CN\Microsoft.Advertising.Mobile.resources.dll
 C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\Bin\Debug\zh-TW\Microsoft.Advertising.Mobile.resources.dll
+C:\Users\Daniel\Desktop\Windows App Development\Film-Spot\Film Spot\Film Spot\obj\Debug\PopupUserControl.g.cs

@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using Film_Spot.Model;
-using Film_Spot.ViewModels;
 using System.Windows.Input;
-using System.Diagnostics;
+using Microsoft.Phone.Controls;
+
 
 namespace Film_Spot
 {

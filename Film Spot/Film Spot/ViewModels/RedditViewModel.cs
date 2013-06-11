@@ -359,7 +359,8 @@ namespace Film_Spot.ViewModels
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    MessageBox.Show("Network error occured " + e.Message);
+                    MessageBox.Show("ERROR: problem connecting to movie server: " + e.Message);
+                    this.IsLoading = false;
                 });
             }
         }
@@ -390,7 +391,7 @@ namespace Film_Spot.ViewModels
             }
             else
             {
-                Debug.WriteLine("no title to search for");
+                //Debug.WriteLine("no title to search for");
             }
         }
 
@@ -423,7 +424,7 @@ namespace Film_Spot.ViewModels
                     }
                     else
                     {
-                        Debug.WriteLine("Search movie details error");
+                        //Debug.WriteLine("Search movie details error");
                     }
                     if ((movie_info.Response == "True" && movie_info.Type == "movie") || (search_type == "s" && movie_info.Response != "False" && movie_info.Search[0].Type == "movie"))
                     {
@@ -573,7 +574,7 @@ namespace Film_Spot.ViewModels
                     }
                     else
                     {
-                        Debug.WriteLine("No {0} details available for {1}", search_type, search_title);
+                        //Debug.WriteLine("No {0} details available for {1}", search_type, search_title);
                     }          
                     
                 });
@@ -582,7 +583,8 @@ namespace Film_Spot.ViewModels
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    MessageBox.Show("Network error occured getting movie details" + e.Message);
+                    MessageBox.Show("ERROR: problem connecting to movie server for details:  " + e.Message);
+                    this.IsLoading = false;
                 });
             }
         }
