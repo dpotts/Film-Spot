@@ -9,7 +9,7 @@
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Film_Spot</RootNamespace>
+    <RootNamespace>FilmSpot</RootNamespace>
     <AssemblyName>Film Spot</AssemblyName>
     <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     </SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>Film_Spot_$(Configuration)_$(Platform).xap</XapFilename>
+    <XapFilename>FilmSpot.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>Film_Spot.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
@@ -107,6 +107,9 @@
     <Compile Include="info.xaml.cs">
       <DependentUpon>info.xaml</DependentUpon>
     </Compile>
+    <Compile Include="play.xaml.cs">
+      <DependentUpon>play.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PopupUserControl.xaml.cs">
       <DependentUpon>PopupUserControl.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="play.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PopupUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,9 +178,6 @@
     <Content Include="Assets\appbar.pin.png" />
     <Content Include="Assets\appbar.question.png" />
     <Content Include="Assets\appbar.star.png" />
-    <Content Include="Assets\ApplicationIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\close.png" />
     <Content Include="Assets\feature.search.png" />
     <Content Include="Assets\feature.video.png" />
@@ -188,6 +192,7 @@
     <Content Include="Assets\Tiles\IconicTileSmall.png" />
     <Content Include="Assets\transport.play.png" />
     <Content Include="README_FIRST.txt" />
+    <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />

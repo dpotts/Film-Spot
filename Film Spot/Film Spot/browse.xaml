@@ -114,9 +114,9 @@
 			DataContext="{StaticResource viewModel}"
 			ItemTemplate="{StaticResource ResultItemTemplate}"                 
 			ItemsSource="{Binding MovieCollection}"                               
-			ListFooter="{Binding}" SelectionChanged="resultListBox_SelectionChanged" Margin="0,0,0,80"/>
+			ListFooter="{Binding}" SelectionChanged="resultListBox_SelectionChanged" Margin="0,0,0,80" MouseEnter="resultListBox_MouseEnter"/>
 
-        <UI:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Left" Height="80" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Bottom" Width="480"/>
+        <UI:AdControl ApplicationId="eab89d23-5f3e-478a-8e1f-6ba49e5591ac" AdUnitId="10075128" HorizontalAlignment="Left" Height="80" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Bottom" Width="480"/>
 
         
         <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="47" Stroke="Black" VerticalAlignment="Top" Width="480"/>
@@ -130,17 +130,5 @@
         </Rectangle>
         <Button x:Name="view_all" Content="View All" HorizontalAlignment="Left" Margin="154,-11,0,0" VerticalAlignment="Top" Grid.RowSpan="2" BorderThickness="0" FontFamily="Segoe WP" RenderTransformOrigin="0.492,0.515" Width="124" Click="view_all_Click" Visibility="Collapsed"/>
     </Grid>
-
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Mode="Default" Opacity="1.0" IsMenuEnabled="False" IsVisible="False" BackgroundColor="{StaticResource PhoneAccentColor}">
-
-            <shell:ApplicationBarIconButton IconUri="Assets/transport.play.png" Text="Play" Click="play_clicked"/>
-            <shell:ApplicationBarIconButton IconUri="Assets/appbar.information.png" Text="Info" Click="info_clicked"/>
-            <shell:ApplicationBarIconButton IconUri="Assets/share.png" Text="Share" Click="share_clicked"/>
-            <shell:ApplicationBarIconButton IconUri="Assets/close.png" Text="Close" Click="close_clicked"/>
-
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
-
 
 </phone:PhoneApplicationPage>

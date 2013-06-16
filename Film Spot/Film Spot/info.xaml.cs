@@ -14,13 +14,14 @@ using Newtonsoft.Json;
 
 namespace Film_Spot
 {
-    public partial class play : PhoneApplicationPage
+    public partial class info : PhoneApplicationPage
     {
         string id = "";
         string link = "";
         string share_link = "";
         string movie_title = "";
         string search_string = "";
+        string movie_poster = "";
 
         public class RootObject_Details
         {
@@ -43,7 +44,7 @@ namespace Film_Spot
             public string Response { get; set; }
         }
 
-        public play()
+        public info()
         {
             InitializeComponent();
         }
@@ -66,6 +67,7 @@ namespace Film_Spot
             NavigationContext.QueryString.TryGetValue("url", out link);
             NavigationContext.QueryString.TryGetValue("share_link", out share_link);
             NavigationContext.QueryString.TryGetValue("search", out search_string);
+            NavigationContext.QueryString.TryGetValue("name", out movie_title);
 
         }
 
@@ -86,19 +88,46 @@ namespace Film_Spot
                 }
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    if(movie_info.Poster != "N/A")
+                    if (movie_info.Poster != "N/A" && movie_info.Poster != null)
+                    {
                         poster.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(movie_info.Poster, UriKind.Absolute));
-                    movie_title = movie_info.Title;
-                    title.Text = movie_info.Title + " (" + movie_info.Year + ")";
-                    rating.Text = movie_info.Rated;
-                    plot.Text = movie_info.Plot;
-                    genre.Text = movie_info.Genre;
-                    imdb.Text = movie_info.imdbRating;
-                    tomato.Text = movie_info.tomatoRating;
-                    runtime.Text = movie_info.Runtime;
-                    writers.Text = movie_info.Writer;
-                    directors.Text = movie_info.Director;
-                    actors.Text = movie_info.Actors;
+                        movie_poster = movie_info.Poster;
+                    }
+
+                    if (movie_info.Title != null)
+                        movie_title = movie_info.Title;
+
+                    title.Text = movie_title;
+
+                    if (movie_info.Year != null)
+                        title.Text += " (" + movie_info.Year + ")";
+
+                    if(movie_info.Rated != null)
+                        rating.Text = movie_info.Rated;
+
+                    if (movie_info.Plot != null)
+                        plot.Text = movie_info.Plot;
+
+                    if (movie_info.Genre != null)
+                        genre.Text = movie_info.Genre;
+
+                    if (movie_info.imdbRating != null)
+                        imdb.Text = movie_info.imdbRating;
+
+                    if (movie_info.tomatoRating != null)
+                        tomato.Text = movie_info.tomatoRating;
+
+                    if (movie_info.Runtime != null)
+                        runtime.Text = movie_info.Runtime;
+
+                    if (movie_info.Writer != null)
+                        writers.Text = movie_info.Writer;
+
+                    if (movie_info.Director != null)
+                        directors.Text = movie_info.Director;
+
+                    if (movie_info.Actors != null)
+                        actors.Text = movie_info.Actors;
                 });
             }
             catch (Exception e)
@@ -112,9 +141,12 @@ namespace Film_Spot
 
         private void play_clicked(object sender, EventArgs e)
         {
-            WebBrowserTask webBrowserTask = new WebBrowserTask();
-            webBrowserTask.Uri = new Uri(link, UriKind.Absolute);
-            webBrowserTask.Show();
+            //WebBrowserTask webBrowserTask = new WebBrowserTask();
+            //webBrowserTask.Uri = new Uri(link, UriKind.Absolute);
+            //webBrowserTask.Show();
+            NavigationService.Navigate(new Uri("/play.xaml?url=" + link, UriKind.Relative));
+
+
         }
 
         private void share_clicked(object sender, EventArgs e)
@@ -135,6 +167,30 @@ namespace Film_Spot
                 NavigationService.Navigate(new Uri("/browse.xaml?title=" + search_string, UriKind.Relative));
 
             }
+        }
+
+        private void pin_clicked(object sender, EventArgs e)
+        {
+            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains("/play.xaml?url=" + link));
+
+            if (tile == null)
+            {
+                if (movie_poster == null)
+                    movie_poster = "Assets/Tiles/FlipCycleTileSmall.png";
+
+                var secondaryTile = new StandardTileData
+                {
+                    Title = movie_title,
+                    BackBackgroundImage = new Uri("Assets/Tiles/FlipCycleTileSmall.png", UriKind.Relative),
+                    BackgroundImage = new Uri(movie_poster, UriKind.RelativeOrAbsolute)
+                };
+                ShellTile.Create(new Uri("/play.xaml?url=" + link, UriKind.Relative), secondaryTile);
+            }
+            else
+            {
+                MessageBox.Show("Already Pinned To Start");
+            }
+
         }
     }
 }

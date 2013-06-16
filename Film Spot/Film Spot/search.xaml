@@ -18,16 +18,16 @@
             <shell:ApplicationBarIconButton IconUri="Assets/appbar.home.png" Text="home" Click="home_click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
-    
+
     <Grid x:Name="LayoutRoot">
         <phone:Panorama Margin="0,175,0,0" Foreground="{StaticResource PhoneAccentBrush}">
 
             <phone:PanoramaItem Header="title">
                 <Grid>
-                <TextBox x:Name="search_box" Margin="-10,83,54,263" KeyDown="search_box_KeyDown" Tap="search_clear" />
-                    <Rectangle Margin="354,95,12,275" Fill="{StaticResource PhoneInverseInactiveBrush}" />
-                    <Rectangle Margin="354,96,13,276" Fill="{StaticResource PhoneBackgroundBrush}" />
-                    <Rectangle Fill="{StaticResource PhoneContrastBackgroundBrush}" Tap="Search_Tap" Margin="342,88,0,263" Stretch="Uniform">
+                    <TextBox x:Name="search_box" Margin="0,83,54,263" KeyDown="search_box_KeyDown" Tap="search_clear" VerticalAlignment="Top" />
+                    <Rectangle Margin="354,95,12,0" Fill="{StaticResource PhoneInverseInactiveBrush}" VerticalAlignment="Top" Height="48" />
+                    <Rectangle Margin="354,96,13,0" Fill="{StaticResource PhoneBackgroundBrush}" VerticalAlignment="Top" Height="46" />
+                    <Rectangle Fill="{StaticResource PhoneContrastBackgroundBrush}" Tap="Search_Tap" Margin="354,96,13,0" Stretch="Uniform" VerticalAlignment="Top" Height="46">
                         <Rectangle.OpacityMask>
                             <ImageBrush ImageSource="Assets/feature.search.png" Stretch="Uniform" />
                         </Rectangle.OpacityMask>
@@ -48,12 +48,12 @@
             </phone:PanoramaItem>
         </phone:Panorama>
         <TextBlock HorizontalAlignment="Left" Height="149" TextWrapping="Wrap" Text="search" VerticalAlignment="Top" Width="460" Margin="10,28,0,0" Foreground="{StaticResource PhoneAccentBrush}" FontSize="130" FontFamily="Segoe WP Light"/>
-        
+
         <StackPanel Grid.Row="0" Background="{StaticResource PhoneAccentBrush}" Margin="0,0,0,682" VerticalAlignment="Top">
             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="filmspot" VerticalAlignment="Top" Height="47" Width="167" FontFamily="{StaticResource Logo_Font}" FontSize="36" Margin="10,-5,0,0" Tap="logo_tap"/>
         </StackPanel>
-        <UI:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Left" Height="80" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Bottom" Width="480"/>
+        <UI:AdControl ApplicationId="eab89d23-5f3e-478a-8e1f-6ba49e5591ac" AdUnitId="10075128" HorizontalAlignment="Left" Height="80" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Bottom" Width="480"/>
     </Grid>
-    
+
 
 </phone:PhoneApplicationPage>

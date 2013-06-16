@@ -1,4 +1,4 @@
-﻿using Film_Spot.Resources;
+﻿using FilmSpot.Resources;
 
 namespace Film_Spot
 {

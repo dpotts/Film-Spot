@@ -6,7 +6,7 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Film_Spot.Resources;
+using FilmSpot.Resources;
 
 namespace Film_Spot
 {

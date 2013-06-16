@@ -74,13 +74,14 @@ namespace Film_Spot
 
         void resultListBox_ItemRealized(object sender, ItemRealizationEventArgs e)
         {
+            this.Focus();
+
             if (!_viewModel.IsLoading && resultListBox.ItemsSource != null && resultListBox.ItemsSource.Count >= _offsetKnob)
             {
                 if (e.ItemKind == LongListSelectorItemKind.Item)
                 {
                     if ((e.Container.Content as MoviesResult).Equals(resultListBox.ItemsSource[resultListBox.ItemsSource.Count - _offsetKnob]))
                     {
-                        this.ApplicationBar.IsVisible = false;
                         _viewModel.LoadPage();
                     }
                 }
@@ -91,58 +92,16 @@ namespace Film_Spot
         {
             if (resultListBox.SelectedItem is Model.MoviesResult)
             {
-                if (resultListBox.SelectedItem.Equals(selected))
-                {
-                    this.ApplicationBar.IsVisible = !this.ApplicationBar.IsVisible;
-                }
-                else
-                {
-                    this.ApplicationBar.IsVisible = true;
-                    selected = (Model.MoviesResult)resultListBox.SelectedItem;
-                }
+                selected = (Model.MoviesResult)resultListBox.SelectedItem;
+                NavigationService.Navigate(new Uri("/info.xaml?id=" + selected.ImdbID + "&url=" + selected.Link + "&share_link=" + selected.Share_URL + "&search=" + _viewModel.get_search() + "&name=" + selected.Title, UriKind.Relative));
             }
             resultListBox.SelectedItem = null;
         }
 
-        private void play_clicked(object sender, EventArgs e)
-        {
-            WebBrowserTask webBrowserTask = new WebBrowserTask();
-            webBrowserTask.Uri = new Uri(selected.Link, UriKind.Absolute);
-            selected = null;
-            this.ApplicationBar.IsVisible = false;
-            webBrowserTask.Show();
-        }
-
-        private void info_clicked(object sender, EventArgs e)
-        {
-            if (selected.ImdbID == null)
-                MessageBox.Show("No more information available for " + selected.Title);
-            else
-            {
-                NavigationService.Navigate(new Uri("/info.xaml?id=" + selected.ImdbID + "&url=" + selected.Link + "&share_link=" + selected.Share_URL + "&search=" + _viewModel.get_search(), UriKind.Relative));
-                this.ApplicationBar.IsVisible = false;
-            }
-        }
-
-        private void share_clicked(object sender, EventArgs e)
-        {
-            ShareLinkTask slt = new ShareLinkTask();
-            slt.Title = selected.Title + " on FilmSpot";
-            slt.Message = "I found " + selected.Title + " for free on FilmSpot. Check it out!";
-            slt.LinkUri = new Uri(selected.Share_URL, UriKind.Absolute);
-            slt.Show();
-            this.ApplicationBar.IsVisible = false;
-        }
-
-        private void close_clicked(object sender, EventArgs e)
-        {
-            this.ApplicationBar.IsVisible = false;
-        }
 
         private void Search_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             selected = null;
-            this.ApplicationBar.IsVisible = false;
             view_all.Visibility = Visibility.Visible;
             _viewModel.set_search(search.Text);
         }
@@ -152,7 +111,6 @@ namespace Film_Spot
             if (e.Key == Key.Enter)
             {
                 selected = null;
-                this.ApplicationBar.IsVisible = false;
                 view_all.Visibility = Visibility.Visible;
                 _viewModel.set_search(search.Text);
                 this.Focus();
@@ -170,13 +128,17 @@ namespace Film_Spot
             _viewModel.clear_search();
             view_all.Visibility = Visibility.Collapsed;
             selected = null;
-            this.ApplicationBar.IsVisible = false;
             _viewModel.LoadPage();
         }
 
         private void logo_tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
+        private void resultListBox_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Focus();
         }
     }
 }

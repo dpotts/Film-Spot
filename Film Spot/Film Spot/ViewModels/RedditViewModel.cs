@@ -199,12 +199,15 @@ namespace Film_Spot.ViewModels
                 {
                     if (!string.IsNullOrEmpty(search))
                     {
-                        url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on";
+                        //vimeo subreddit invite only
+                        //url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on";
+                        url = "http://www.reddit.com/r/fullmoviesonyoutube/search.json?q=" + search + "&restrict_sr=on";
                     }
                     else
                     {
-
-                        url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json";
+                        //vimeo subreddit invite only
+                        //url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json";
+                        url = "http://www.reddit.com/r/fullmoviesonyoutube/new.json";
                     }
                 }
             }
@@ -212,11 +215,17 @@ namespace Film_Spot.ViewModels
             {
                 if (!string.IsNullOrEmpty(search))
                 {
-                    url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on&after=" + last_post_name;
+                    //vimeo subreddit invite only
+                    //url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/search.json?q=" + search + "&restrict_sr=on&after=" + last_post_name;
+                    url = "http://www.reddit.com/r/fullmoviesonyoutube/search.json?q=" + search + "&restrict_sr=on&after=" + last_post_name;
+
                 }
                 else
                 {
-                    url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json?after=" + last_post_name;
+                    //vimeo subreddit invite only
+                    //url = "http://www.reddit.com/r/fullmoviesonyoutube+fullmoviesonvimeo/new.json?after=" + last_post_name;
+                    url = "http://www.reddit.com/r/fullmoviesonyoutube/new.json?after=" + last_post_name;
+
                 }
             }
             if (!string.IsNullOrEmpty(url))
@@ -319,7 +328,8 @@ namespace Film_Spot.ViewModels
                                     string[] arg = args[args.Length - 1].Split('&');
                                     string[] vid = arg[arg.Length - 1].Split('=');
                                     id = vid[vid.Length - 1];
-                                    url = "http://www.youtube.com/embed/" + id + "?autoplay=1&modestbranding=1&showinfo=0&showsearch=0&rel=0";
+                                    url = "http://www.youtube.com/embed/" + id;
+                                    //url = "http://m.youtube.com/";//watch?v=" + id;
                                     share_url = "http://www.youtube.com/v/" + id;
                                 }
                                 else
